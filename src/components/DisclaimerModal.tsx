@@ -5,15 +5,24 @@ import React, { useEffect, useState } from 'react';
 import { Image, Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { C } from '../constants/colors';
 
-const TERMS_KEY = 'hasAcceptedTerms_v1';
+const TERMS_KEY = 'hasAcceptedTerms_v2';
 
 export default function DisclaimerModal() {
   const [step, setStep] = useState<'hidden' | 'disclaimer' | 'camera'>('hidden');
 
   useEffect(() => {
-    AsyncStorage.getItem(TERMS_KEY).then(val => {
-      if (val !== 'true') setStep('disclaimer');
-    }).catch(() => {});
+    const checkTerms = async () => {
+      try {
+        const val = await AsyncStorage.getItem(TERMS_KEY);
+        if (val !== 'true') {
+          setStep('disclaimer');
+        }
+      } catch (e) {
+        // Si erreur AsyncStorage, on affiche quand même le disclaimer
+        setStep('disclaimer');
+      }
+    };
+    checkTerms();
   }, []);
 
   const acceptDisclaimer = async () => {

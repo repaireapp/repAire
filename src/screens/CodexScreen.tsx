@@ -111,7 +111,7 @@ export default function CodexScreen({ onBack, initialView = 'menu' }: Props) {
               source={data.image}
               style={{
                 width: '100%', height: '100%',
-                resizeMode: isZoomPage ? 'contain' : 'cover',
+                resizeMode: 'contain',
               }}
             />
             {/* Hitboxes overlay - same size as image container */}
@@ -123,8 +123,8 @@ export default function CodexScreen({ onBack, initialView = 'menu' }: Props) {
                   position: 'absolute',
                   top: `${zone.top}%`, left: `${zone.left}%`,
                   width: `${zone.width}%`, height: `${zone.height}%`,
-                  backgroundColor: 'rgba(79, 209, 197, 0.08)',
-                  borderWidth: 1, borderColor: 'rgba(79, 209, 197, 0.15)',
+                  backgroundColor: 'rgba(79, 209, 197, 0.18)',
+                  borderWidth: 1.5, borderColor: 'rgba(79, 209, 197, 0.45)',
                   borderRadius: 8,
                   zIndex: 20,
                 }}
