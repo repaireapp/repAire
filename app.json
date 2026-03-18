@@ -18,6 +18,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
+      "versionCode": 2,
       "package": "com.shurikade.repAire"
     },
     "web": {
