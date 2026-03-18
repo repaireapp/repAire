@@ -1,0 +1,7 @@
+[build]
+  base = "landing"
+  publish = "landing"
+  functions = "landing/netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
