@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "repAire",
+    "slug": "repAire",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "scheme": "repaire",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1A202C",
+        "foregroundImage": "./assets/images/adaptative-icon.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.shurikade.repAire"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+            "expo-splash-screen",
+            {
+              "image": "./assets/images/icone.png",
+              "imageWidth": 200,
+              "resizeMode": "contain",
+              "backgroundColor": "#1A202C",
+              "dark": {
+                "backgroundColor": "#1A202C"
+              }
+            }
+          ],
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4486aad5-8b0e-482c-8f77-7562f11daa0e"
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(npx expo-doctor:*)",
+      "Bash(npx expo:*)",
+      "Bash(node -e \"const pkg = require\\(''expo-router/package.json''\\); console.log\\(''expo-router version:'', pkg.version\\);\")",
+      "Bash(node -e \":*)",
+      "Bash(curl -s \"http://localhost:8082/app/index.bundle?platform=web&dev=true\")",
+      "Bash(curl -s \"http://localhost:8081/app/index.bundle?platform=web&dev=true\")",
+      "Bash(node -e \"try { require.resolve\\(''expo-router''\\); console.log\\(''expo-router FOUND''\\); } catch\\(e\\) { console.log\\(''expo-router NOT FOUND''\\); }\")",
+      "Bash(curl -s http://localhost:8081)",
+      "Bash(where java:*)",
+      "Bash(java -version)",
+      "Bash(export ANDROID_HOME=\"C:\\\\Users\\\\colla\\\\AppData\\\\Local\\\\Android\\\\Sdk\")",
+      "Bash(export JAVA_HOME=\"C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr\")",
+      "Bash(echo \"ANDROID_HOME=$ANDROID_HOME\")",
+      "Bash(echo \"JAVA_HOME=$JAVA_HOME\")",
+      "Bash(\"$JAVA_HOME/bin/java\" -version)",
+      "Bash(\"C:/Program Files/Android/Android Studio/jbr/bin/java.exe\" -version)",
+      "Bash(ls \"C:/Users/colla/Desktop/Appli repaire/repAire/app/\\(tabs\\)/\")",
+      "Bash(wmic logicaldisk:*)",
+      "Bash(rm -rf .expo node_modules/.cache dist /tmp/metro-* \"$TMPDIR/metro-*\" \"$LOCALAPPDATA/Temp/metro-*\")",
+      "Bash(rm -rf /tmp/test-export)",
+      "Bash(npx eas:*)",
+      "Bash(wc -l \"C:\\\\Users\\\\colla\\\\Desktop\\\\Appli repaire\\\\repAire\\\\app\\\\\\(tabs\\)\\\\index.tsx\")",
+      "Bash(npx tsc:*)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(gh auth:*)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" --version)",
+      "Bash(\"/c/Program Files \\(x86\\)/GitHub CLI/gh.exe\" --version)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" auth status)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo create repaireapp/repAire --public --description \"Le mécano IA dans ta poche - Diagnostic vélo & trottinette par photo\" --source . --remote origin)"
+    ]
+  }
+}
