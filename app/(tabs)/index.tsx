@@ -2,7 +2,6 @@ import * as Speech from 'expo-speech';
 import React, { useEffect, useState } from 'react';
 import { BackHandler, StatusBar } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import AdModal from '../../src/components/AdModal';
 import DisclaimerModal from '../../src/components/DisclaimerModal';
 import { C } from '../../src/constants/colors';
 import CodexScreen from '../../src/screens/CodexScreen';
@@ -15,9 +14,6 @@ export default function Index() {
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
   const [iaResult, setIaResult] = useState<string | null>(null);
   const [codexStartView, setCodexStartView] = useState('global');
-  const [isPremium, setIsPremium] = useState(false);
-  const [showAd, setShowAd] = useState(false);
-  const [pendingCodexTarget, setPendingCodexTarget] = useState<string | null>(null);
 
   // Android back button
   useEffect(() => {
@@ -44,26 +40,11 @@ export default function Index() {
   const handleSelect = (vehicle: string) => {
     if (vehicle === 'Maintenance') { setSelectedVehicle('Maintenance'); return; }
     if (vehicle === 'Codex') {
-      if (isPremium) {
-        setCodexStartView('menu');
-        setSelectedVehicle('Codex');
-      } else {
-        setPendingCodexTarget('menu');
-        setShowAd(true);
-      }
+      setCodexStartView('menu');
+      setSelectedVehicle('Codex');
       return;
     }
     setSelectedVehicle(vehicle);
-  };
-
-  // After ad finishes
-  const onAdComplete = () => {
-    setShowAd(false);
-    if (pendingCodexTarget) {
-      setCodexStartView(pendingCodexTarget);
-      setSelectedVehicle('Codex');
-      setPendingCodexTarget(null);
-    }
   };
 
   // --- RENDER ---
@@ -73,7 +54,6 @@ export default function Index() {
         <MaintenanceScreen
           onBack={() => setSelectedVehicle(null)}
           onOpenCodex={openCodexDirectly}
-          isPremium={isPremium}
         />
       );
     }
@@ -99,8 +79,6 @@ export default function Index() {
       return (
         <HomeScreen
           onSelect={handleSelect}
-          isPremium={isPremium}
-          onTogglePremium={() => setIsPremium(!isPremium)}
         />
       );
     }
@@ -122,7 +100,6 @@ export default function Index() {
         <StatusBar barStyle="light-content" backgroundColor={C.bg} translucent={false} />
         {renderScreen()}
         <DisclaimerModal />
-        <AdModal visible={showAd} label="Publicité Partenaire" onComplete={onAdComplete} />
       </SafeAreaView>
     </SafeAreaProvider>
   );

@@ -1,3 +1,1 @@
-declare module '@env' {
-  export const OPENAI_API_KEY: string;
-}
+// No longer needed — API key is now server-side via Netlify Functions

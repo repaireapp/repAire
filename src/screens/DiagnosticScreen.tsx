@@ -3,7 +3,6 @@ import * as FileSystem from 'expo-file-system/legacy';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import AdModal from '../components/AdModal';
 import ScanModal from '../components/ScanModal';
 import { C } from '../constants/colors';
 import { bikeOfflineGuides, scooterOfflineGuides } from '../data/offlineGuides';
@@ -20,8 +19,6 @@ export default function DiagnosticScreen({ vehicleType, onBack, onResult }: Prop
   const [description, setDescription] = useState('');
   const [tempImage, setTempImage] = useState<string | null>(null);
   const [hasConnectionError, setHasConnectionError] = useState(false);
-  const [isPremium, setIsPremium] = useState(false);
-  const [showAd, setShowAd] = useState(false);
 
   const isBike = vehicleType === 'Bike';
   const title = isBike ? 'DIAGNOSTIC VÉLO' : 'DIAGNOSTIC TROTTINETTE';
@@ -75,14 +72,7 @@ export default function DiagnosticScreen({ vehicleType, onBack, onResult }: Prop
     const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, { encoding: 'base64' });
     setTempImage(base64);
     setHasConnectionError(false);
-
-    if (isPremium) lancerAnalyse(base64);
-    else setShowAd(true);
-  };
-
-  const onAdComplete = () => {
-    setShowAd(false);
-    if (tempImage) lancerAnalyse(tempImage);
+    lancerAnalyse(base64);
   };
 
   return (
@@ -154,11 +144,6 @@ export default function DiagnosticScreen({ vehicleType, onBack, onResult }: Prop
       </ScrollView>
 
       <ScanModal visible={isScanning} vehicleType={vehicleType} />
-      <AdModal
-        visible={showAd}
-        label={isBike ? 'Promo VAE Sport...' : 'Assurance Trottinette...'}
-        onComplete={onAdComplete}
-      />
     </View>
   );
 }

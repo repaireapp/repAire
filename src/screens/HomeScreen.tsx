@@ -6,11 +6,9 @@ import { C } from '../constants/colors';
 
 interface Props {
   onSelect: (vehicle: string) => void;
-  isPremium: boolean;
-  onTogglePremium: () => void;
 }
 
-export default function HomeScreen({ onSelect, isPremium, onTogglePremium }: Props) {
+export default function HomeScreen({ onSelect }: Props) {
   const handleContact = () => {
     Linking.openURL('mailto:repaire.app@gmail.com?subject=Feedback repAire');
   };
@@ -60,11 +58,11 @@ export default function HomeScreen({ onSelect, isPremium, onTogglePremium }: Pro
           <TouchableOpacity style={s.codexBanner} onPress={() => onSelect('Codex')}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={s.codexIcon}>
-                <Ionicons name={isPremium ? 'book-outline' : 'lock-closed'} size={22} color={C.orange} />
+                <Ionicons name="book-outline" size={22} color={C.orange} />
               </View>
               <View>
                 <Text style={s.codexTitle}>OUVRIR LE CODEX</Text>
-                <Text style={s.codexSub}>{isPremium ? 'Accès illimité' : 'Débloquer'}</Text>
+                <Text style={s.codexSub}>Manuel interactif</Text>
               </View>
             </View>
             <Ionicons name="chevron-forward" size={18} color={C.border} />
@@ -83,10 +81,6 @@ export default function HomeScreen({ onSelect, isPremium, onTogglePremium }: Pro
           <Ionicons name="chevron-forward" size={18} color={C.textDim} />
         </TouchableOpacity>
 
-        {/* Admin toggle */}
-        <TouchableOpacity onPress={onTogglePremium} style={{ alignSelf: 'center', marginTop: 8 }}>
-          <Text style={{ color: C.border, fontSize: 9 }}>[ADMIN] Mode : {isPremium ? 'PREMIUM' : 'GRATUIT'}</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

@@ -1,6 +1,5 @@
-import { OPENAI_API_KEY } from '@env';
-
-const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+// Proxy sécurisé — la clé API reste sur le serveur Netlify
+const API_PROXY_URL = 'https://repaireapp.netlify.app/.netlify/functions/diagnostic';
 
 const ALLOWED_TOOLS = [
   'zoom_cles_allen', 'zoom_cles_plates', 'zoom_pompe_main',
@@ -151,17 +150,16 @@ export const sendToAI = async (
   const systemPrompt = PERSONALITY + TOOLS_INSTRUCTIONS + PARTS_INSTRUCTIONS + specifics + FORMAT + CHILD_LANGUAGE;
 
   try {
-    const response = await fetch(OPENAI_API_URL, {
+    const response = await fetch(API_PROXY_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        response_format: { type: 'json_object' },
         model: 'gpt-4o-mini',
         temperature: 0.7,
         max_tokens: 1000,
+        response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: systemPrompt },
           {

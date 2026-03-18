@@ -12,10 +12,9 @@ import {
 interface Props {
   onBack: () => void;
   onOpenCodex: (target: string) => void;
-  isPremium: boolean;
 }
 
-export default function MaintenanceScreen({ onBack, onOpenCodex, isPremium }: Props) {
+export default function MaintenanceScreen({ onBack, onOpenCodex }: Props) {
   const [garage, setGarage] = useState<UserMaintenanceProfile[]>([]);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
@@ -52,10 +51,6 @@ export default function MaintenanceScreen({ onBack, onOpenCodex, isPremium }: Pr
   };
 
   const checkLimitAndOpenForm = () => {
-    if (!isPremium && garage.length >= 1) {
-      Alert.alert('Garage Plein', 'La version gratuite est limitée à 1 véhicule.\n\nPasse Premium pour un garage illimité !');
-      return;
-    }
     setShowGarage(false);
     setShowNewForm(true);
   };
