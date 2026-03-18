@@ -21,6 +21,12 @@ Action immédiate : Chaque étape commence par un verbe d'action (Dévisse, Pous
 Zéro Jargon : Si tu dois parler d'une pièce technique, explique comment elle est faite.
 Le Test de réussite : À la fin, donne un moyen de vérifier que c'est bien réparé.
 
+HONNÊTETÉ :
+Si la photo est floue, trop sombre, ou que tu ne peux pas identifier le problème avec certitude, DIS-LE. Ne fais JAMAIS semblant de voir quelque chose. Propose de reprendre la photo sous un meilleur angle.
+
+LIMITES :
+Si la réparation nécessite de soulever le véhicule, implique l'électronique haute tension (batterie, moteur), ou dépasse les compétences d'un débutant, redirige vers un professionnel.
+
 STRUCTURE :
 Étape 1 : Préparation. (Mettre le vélo à l'envers, stabiliser la trottinette).
 Étape 2 : Le Geste technique. (La manipulation précise pour réparer).
@@ -50,7 +56,7 @@ INTERDICTION FORMELLE d'inventer des noms. Si tu n'as pas l'ID exact, renvoie un
 RAPPEL SÉCURITÉ : Jamais de tournevis pour un pneu.
 `;
 
-const PARTS_INSTRUCTIONS = `
+const PARTS_INSTRUCTIONS_BIKE = `
 RÈGLE POUR 'targetPart' (Choisir une seule valeur) :
 - 'pneu' (Crevaison, pression)
 - 'roue' (Voile, rayons)
@@ -59,6 +65,17 @@ RÈGLE POUR 'targetPart' (Choisir une seule valeur) :
 - 'transmission' (Chaîne, dérailleur)
 - 'guidon' (Potence, jeu)
 - 'global' (Par défaut)
+INTERDICTION d'inventer une autre valeur.
+`;
+
+const PARTS_INSTRUCTIONS_SCOOTER = `
+RÈGLE POUR 'targetPart' (Choisir une seule valeur) :
+- 'scooter_guidon' (Guidon, potence)
+- 'scooter_pliage' (Système de pliage)
+- 'scooter_roue_av' (Roue avant)
+- 'scooter_roue_ar' (Roue arrière, moteur)
+- 'scooter_freins' (Freins)
+- 'scooter_global' (Par défaut)
 INTERDICTION d'inventer une autre valeur.
 `;
 
@@ -74,7 +91,6 @@ Si dérailleur : Parle des vis H/L si pertinent. Si freins : Vérifie d'abord l'
 - DÉRAILLEUR : Parle des butées si la chaîne tombe.
 LOGISTIQUE : Rappelle de retourner le vélo sur la selle pour réparer si nécessaire.
 SÉCURITÉ : Cadre fissuré, électronique = Danger Mortel.
-RÈGLE 'targetPart' : Utilise uniquement : 'pneu', 'roue', 'freins', 'frein_disque', 'transmission', 'guidon', 'global'.
 `;
 
 const SCOOTER_SPECIFICS = `
@@ -85,8 +101,6 @@ SÉCURITÉ CRITIQUE : Batterie chaude/gonflée = DANGER INCENDIE IMMÉDIAT.
 - Jeu : Si le guidon bouge, c'est le système de pliage -> Clés Allen.
 - Freins : Souvent un seul frein à disque ou tambour.
 - ÉLEC : Si pas d'allumage, toujours proposer de vérifier les connecteurs dans le guidon.
-RÈGLE 'targetPart' : Utilise uniquement :
-- 'scooter_guidon', 'scooter_pliage', 'scooter_roue_av', 'scooter_roue_ar', 'scooter_global', 'scooter_freins'
 ASTUCE VISUELLE : Le système de pliage est TOUJOURS situé à la jonction entre le tube vertical et la planche.
 `;
 
@@ -147,7 +161,8 @@ export const sendToAI = async (
   vehicleType: 'Bike' | 'Scooter'
 ): Promise<string> => {
   const specifics = vehicleType === 'Scooter' ? SCOOTER_SPECIFICS : BIKE_SPECIFICS;
-  const systemPrompt = PERSONALITY + TOOLS_INSTRUCTIONS + PARTS_INSTRUCTIONS + specifics + FORMAT + CHILD_LANGUAGE;
+  const partsInstructions = vehicleType === 'Scooter' ? PARTS_INSTRUCTIONS_SCOOTER : PARTS_INSTRUCTIONS_BIKE;
+  const systemPrompt = PERSONALITY + TOOLS_INSTRUCTIONS + partsInstructions + specifics + FORMAT + CHILD_LANGUAGE;
 
   try {
     const response = await fetch(API_PROXY_URL, {
@@ -157,8 +172,8 @@ export const sendToAI = async (
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
-        temperature: 0.7,
-        max_tokens: 1000,
+        temperature: 0.4,
+        max_tokens: 1500,
         response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: systemPrompt },
